@@ -109,7 +109,7 @@ if(WIN32)
     add_compile_options(/guard:cf)
     add_link_options(/guard:cf)
   else()
-    add_compile_options(-fcf-protection)
+    add_compile_options(-fcf-protection=none)
   endif()
 endif(WIN32)
 
