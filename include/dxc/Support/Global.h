@@ -229,7 +229,7 @@ template <typename T> T *VerifyNullAndThrow(T *p) {
 }
 #define VNT(__p) VerifyNullAndThrow(__p)
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 
 extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA(
     const char *msg);
@@ -268,7 +268,7 @@ inline void OutputDebugFormatA(const char *pszFormat, ...) {
 
   va_list argList;
   va_start(argList, pszFormat);
-  int count = vsnprintf_s(buffer, _countof(buffer), pszFormat, argList);
+  int count = vsprintf_s(buffer, _countof(buffer), pszFormat, argList);
   va_end(argList);
 
   OutputDebugStringA(buffer);
@@ -277,7 +277,7 @@ inline void OutputDebugFormatA(const char *pszFormat, ...) {
   }
 }
 
-#endif // _MSC_VER
+#endif // _WIN32
 
 #ifndef NDEBUG
 
@@ -300,7 +300,7 @@ inline void OutputDebugFormatA(const char *pszFormat, ...) {
     if (!(exp)) {                                                              \
       OutputDebugFormatA(                                                      \
           "Error: \t%s\nFile:\n%s(%d)\nFunc:\t%s.\n\t" fmt "\n",               \
-          "!(" #exp ")", __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);       \
+          "!(" #exp ")", __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__);     \
       __debugbreak();                                                          \
     }                                                                          \
   } while (0)

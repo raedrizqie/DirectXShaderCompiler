@@ -13,7 +13,7 @@
 #ifndef __DXC_API__
 #define __DXC_API__
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 #ifndef DXC_API_IMPORT
 #define DXC_API_IMPORT __declspec(dllimport)
 #endif
