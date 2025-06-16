@@ -61,14 +61,14 @@
 #include "llvm/Support/MemoryBuffer.h"
 #include "llvm/Support/Path.h"
 #include "llvm/Support/raw_ostream.h"
-#ifdef _WIN32
+#ifdef _MSC_VER
 #include <comdef.h>
 #include <dia2.h>
 #endif
 #include <algorithm>
 #include <unordered_map>
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 #pragma comment(lib, "version.lib")
 #endif
 
@@ -137,12 +137,12 @@ private:
                                   IDxcBlob **ppResult);
 
 // Dia is only supported on Windows.
-#ifdef _WIN32
+#ifdef _MSC_VER
   // TODO : Refactor two functions below. There are duplicate functions in
   // DxcContext in dxa.cpp
   HRESULT GetDxcDiaTable(IDxcLibrary *pLibrary, IDxcBlob *pTargetBlob,
                          IDiaTable **ppTable, LPCWSTR tableName);
-#endif // _WIN32
+#endif // _MSC_VER
 
   HRESULT FindModuleBlob(hlsl::DxilFourCC fourCC, IDxcBlob *pSource,
                          IDxcLibrary *pLibrary, IDxcBlob **ppTargetBlob);
@@ -1142,7 +1142,7 @@ HRESULT DxcContext::FindModuleBlob(hlsl::DxilFourCC fourCC, IDxcBlob *pSource,
 
 // This function is currently only supported on Windows due to usage of
 // IDiaTable.
-#ifdef _WIN32
+#ifdef _MSC_VER
 // TODO : There is an identical code in DxaContext in Dxa.cpp. Refactor this
 // function.
 HRESULT DxcContext::GetDxcDiaTable(IDxcLibrary *pLibrary, IDxcBlob *pTargetBlob,
@@ -1176,7 +1176,7 @@ HRESULT DxcContext::GetDxcDiaTable(IDxcLibrary *pLibrary, IDxcBlob *pTargetBlob,
   *ppTable = pTable.Detach();
   return S_OK;
 }
-#endif // _WIN32
+#endif // _MSC_VER
 
 bool GetDLLFileVersionInfo(const char *dllPath, unsigned int *version) {
   // This function is used to get version information from the DLL file.
@@ -1399,7 +1399,7 @@ static LONG CALLBACK ExceptionFilter(PEXCEPTION_POINTERS pExceptionInfo) {
 #endif
 
 #ifdef _WIN32
-int dxc::main(int argc, const wchar_t **argv_) {
+int dxc::wmain(int argc, const wchar_t **argv_) {
 #else
 int dxc::main(int argc, const char **argv_) {
 #endif // _WIN32

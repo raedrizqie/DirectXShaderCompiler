@@ -28,7 +28,7 @@ void WriteDXILVersionInfo(llvm::raw_ostream &OS,
                           dxc::DxcDllSupport &DxilSupport);
 
 #ifdef _WIN32
-int main(int argc, const wchar_t **argv_);
+int wmain(int argc, const wchar_t **argv_);
 #else
 int main(int argc, const char **argv_);
 #endif // _WIN32

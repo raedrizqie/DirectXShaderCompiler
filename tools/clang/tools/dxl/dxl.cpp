@@ -19,7 +19,7 @@ int __cdecl wmain(int argc, const wchar_t **argv_) {
     args.emplace_back(argv_[i]);
   args.emplace_back(L"-link");
 
-  return dxc::main(args.size(), args.data());
+  return dxc::wmain(args.size(), args.data());
 #else
 int main(int argc, const char **argv_) {
   std::vector<const char *> args;
